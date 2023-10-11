@@ -45,7 +45,7 @@ export const ProductDetail = () => {
         <h2 className="text-2xl font-semibold">Products Detail Page</h2>
       </div>
 
-      <main className="container mx-auto my-4 mx-10">
+      <main className="container bg-white mx-auto my-4 mx-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="md:order-2">
             {product && (
@@ -68,6 +68,10 @@ export const ProductDetail = () => {
             <div className="mb-4">
               <p className="text-xl font-semibold">Price:</p>
               <p>{product?.price}</p>
+            </div>
+            <div className="mb-4">
+              <p className="text-xl font-semibold">Remain:</p>
+              <p>{product?.quantity}</p>
             </div>
           </div>
         </div>

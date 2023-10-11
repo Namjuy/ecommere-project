@@ -10,7 +10,7 @@ import { useCheckLogin } from "../useCheckLogin";
 
 export const Home = () => {
   useCheckLogin();
-  const ImageUrl = `../assets/image`
+  const ImageUrl = `../assets/image`;
   const [loading, setLoading] = useState(false);
   const paginationStyle: string =
     "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white";
@@ -50,9 +50,6 @@ export const Home = () => {
     loadProductList();
   }, []);
 
-   
-    
-  
   return (
     <>
       <Header />
@@ -86,9 +83,7 @@ export const Home = () => {
       <Spin spinning={loading} tip="Loading....">
         <div className="container mx-auto my-0">
           <div id="products">
-            <div className="text-2xl text-center font-semibold">
-              Clothes
-            </div>
+            <div className="text-2xl text-center font-semibold">Clothes</div>
 
             <div className="products__list" id="products__list">
               {currentItems.map((item) => (
@@ -96,15 +91,15 @@ export const Home = () => {
                   <small className="absolute top-0 left-0 bg-red-500 text-white inline-block py-1 px-2 rounded-br-lg">
                     Sale {item.sale}%
                   </small>
-                  <p className="flex h-279 items-center hover:scale-115 transform transition-transform duration-400">
+                  <div className="flex justify-center items-center hover:scale-115 transform transition-transform duration-400">
                     <a href="#" className="mb-30 block text-center h-224">
                       <img
-                        className="max-w-[80%] inline-block"
+                        className="h-[200px] inline-block"
                         src={item.productImage}
                         alt=""
                       />
                     </a>
-                  </p>
+                  </div>
                   <p>
                     <a href="#" className="products__title">
                       {item?.productName}
@@ -120,7 +115,7 @@ export const Home = () => {
                     <br />
                     <span className="inline-block ">
                       {" "}
-                     Made from: {item.origin}{" "}
+                      Made from: {item.origin}{" "}
                     </span>
                   </div>
                   <br />
@@ -138,14 +133,13 @@ export const Home = () => {
         <ul className="flex items-center -space-x-px h-8 text-smination justify-center">
           {Array.from({ length: totalPage }).map((_, index) => (
             <li
-              style={{ marginRight: "10px" }}
               key={index}
               onClick={() => changePage(index + 1)}
-              className={
+              className={`${
                 currentPage === index + 1
-                  ? "active bg-blue-50 " + paginationStyle
-                  : paginationStyle
-              }
+                  ? "bg-blue-500 text-black"
+                  : "bg-white text-gray-500"
+              } px-3 h-8 leading-tight border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
             >
               {index + 1}
             </li>

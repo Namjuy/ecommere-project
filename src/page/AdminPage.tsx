@@ -3,7 +3,7 @@ import { Drawer, Spin, message } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-
+import "../styles/css/home.css";
 import { useDispatch } from "react-redux";
 import {
   addProductItem,
@@ -28,7 +28,7 @@ export const ProductsTable = () => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const paginationStyle: string =
-    "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white";
+    "px-3 h-8 leading-tight border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white";
   ////////////////////////////////////////////////////////////////
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5; // You can change this to the desired number of items per page
@@ -44,9 +44,6 @@ export const ProductsTable = () => {
   const changePage = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
-
-  //////////////
-  // const [productEdit, setProductEdit] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -128,58 +125,69 @@ export const ProductsTable = () => {
             Tìm kiếm tên sản phẩm
           </button>
         </div>
-        <table className="w-full mt-12 text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-sky-400 dark:bg-gray-700 dark:text-gray-400">
-            <tr className="">
-              <th className="px-6 py-3">Product ID</th>
-              <th className="px-6 py-3">Product Name</th>
-              <th className="px-6 py-3">Description</th>
-              <th className="px-6 py-3">Price</th>
-              <th className="px-6 py-3">Sale</th>
-              <th className="px-6 py-3">Quantity</th>
-              <th className="px-6 py-3">Origin</th>
-              <th className="px-6 py-3">Product Image</th>
-              <th className="px-6 py-3 text-center" colSpan={3}>
-                Action
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentItems.map((item) => (
-              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <td className="px-6 py-4">{item.id}</td>
-                <td className="px-6 py-4">{item.productName}</td>
-                <td className="px-6 py-4">{item.description}</td>
-                <td className="px-6 py-4">{item.price}</td>
-                <td className="px-6 py-4">{item.sale}</td>
-                <td className="px-6 py-4">{item.quantity}</td>
-                <td className="px-6 py-4">{item.origin}</td>
-                <td className="px-6 py-4">{item.productImage}</td>
-                <td className="px-6 py-4">
-                  {" "}
-                  <button>Details</button>
-                </td>
-                <td className="px-6 py-4">
-                  <button onClick={() => handleEditClick(item)}>Edit</button>
-                </td>
-                <td className="px-6 py-4">
-                  <button onClick={() => removeProduct(item.id)}>Delete</button>
-                </td>
+        <div className="overflow-x-auto">
+          <table >
+            <thead className="bg-sky-400 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <th className="">Product ID</th>
+                <th className="px-6 py-3">Product Name</th>
+                <th className="px-6 py-3">Description</th>
+                <th className="px-6 py-3">Price</th>
+                <th className="px-6 py-3">Sale</th>
+                <th className="px-6 py-3">Quantity</th>
+                <th className="px-6 py-3">Origin</th>
+                <th style={{width:'15%'}}>Product Image</th>
+                <th className="px-6 py-3" colSpan={2}>
+                  Action
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {currentItems.map((item) => (
+                <tr
+                  key={item.id}
+                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                >
+                  <td className="px-6 py-3">{item.id}</td>
+                  <td className="px-6 py-3">{item.productName}</td>
+                  <td className="px-6 py-3">{item.description}</td>
+                  <td className="px-6 py-3">{item.price}</td>
+                  <td className="px-6 py-3">{item.sale}</td>
+                  <td className="px-6 py-3">{item.quantity}</td>
+                  <td className="px-6 py-3">{item.origin}</td>
+                  <td className="px-6 py-3">{item.productImage}</td>
+                  <td className="px-6 py-3">
+                    <button
+                      className="text-blue-600 hover:underline"
+                      onClick={() => handleEditClick(item)}
+                    >
+                      Edit
+                    </button>
+                  </td>
+                  <td className="px-6 py-3">
+                    <button
+                      className="text-red-600 hover:underline"
+                      onClick={() => removeProduct(item.id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
         {/* Pagination */}
         <ul className="flex items-center -space-x-px h-8 text-smination justify-center">
           {Array.from({ length: totalPage }).map((_, index) => (
             <li
               key={index}
               onClick={() => changePage(index + 1)}
-              className={
+              className={`${
                 currentPage === index + 1
-                  ? "active bg-blue-50 " + paginationStyle
-                  : paginationStyle
-              }
+                  ? "bg-blue-500 text-black"
+                  : "bg-white text-gray-500"
+              } ${paginationStyle}`}
             >
               {index + 1}
             </li>
@@ -244,13 +252,12 @@ const ProductDrawer = ({
   const chooseImage = (e: any) => {
     const file = e.target.files[0];
     console.log(file);
-    
+
     if (file) {
       setSelectedImageUrl(file);
     } else {
       setSelectedImageUrl("");
     }
-  
   };
 
   //post products to api
@@ -258,7 +265,7 @@ const ProductDrawer = ({
   async function addProduct(productItem: any) {
     setLoading(true);
     try {
-      const newProductItem = { ...productItem, productImage: selectedImageUrl };
+      const newProductItem = { ...productItem };
       await dispatch(addProductItem(newProductItem)).unwrap();
       message.success("Add product successful", 1);
       onClose();
@@ -279,7 +286,6 @@ const ProductDrawer = ({
       const newProductItem = {
         id,
         ...productItem,
-        productImage: selectedImageUrl,
       };
 
       await dispatch(editProductItem(newProductItem)).unwrap();
@@ -382,10 +388,11 @@ const ProductDrawer = ({
               </label> */}
               <br />
               <input
-                {...register("productImage")}
-                type="file"
+                className={inputStyle}
+                type="text"
                 id="productImg"
-                onChange={chooseImage}
+                {...register("productImage")}
+                // onChange={chooseImage}
               />
               <br />
               <p>{errors.image?.message}</p>

@@ -212,6 +212,8 @@
   #products .products__list .products__item {
     flex: calc(70% - 20px);
     max-width: calc(70% - 20px);
+    margin: 0 auto; /* Center horizontally */
+    text-align: center; /* Center text */
   }
   footer .footer__body .footer__item {
     flex: 100%;
@@ -229,7 +231,10 @@
   #promote .promote__heading {
     font-size: 20px;
   }
-  #products .products__heading {
-    font-size: 20px;
+  #products .products__list .products__item {
+    flex: 100%; /* Full width to center */
+    max-width: 100%; /* Full width to center */
+    margin: 0 auto; /* Center horizontally */
+    text-align: center; /* Center text */
   }
 }
