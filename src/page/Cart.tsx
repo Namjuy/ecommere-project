@@ -1,12 +1,13 @@
-import { useCallback, useContext, useEffect, useState } from "react";
-
-import Header from "../component/Header";
+import React, { useCallback, useState, useEffect } from "react";
 import { Spin } from "antd";
-import Footer from "../component/Footer";
-import { updateProductList } from "../slices/productListSlice";
 import { useDispatch } from "react-redux";
 import { useCheckLogin } from "../useCheckLogin";
 import "../styles/css/cart.css";
+
+import Header from "../component/Header";
+import Footer from "../component/Footer";
+import { updateProductList } from "../slices/productListSlice";
+
 export const Cart = () => {
   useCheckLogin();
   const [resultArray, setResultArray] = useState([]);
@@ -51,63 +52,49 @@ export const Cart = () => {
     setTotalPrice(total);
   }, [resultArray]);
 
-  //click payment button
   function doPayment() {
     setLoading(true);
     const cloneResultArray = [...resultArray];
 
     cloneResultArray.map((item) => {
       updatedCart(item);
-
-      // console.log(cloneItem, quantity);
     });
     localStorage.setItem("cart", JSON.stringify([]));
-
     setCheckPayment(true);
   }
 
-  //edit produt to api
-  async function updatedCart(item: any) {
+  async function updatedCart(item) {
     try {
       await dispatch(updateProductList(item)).unwrap();
       setLoading(false);
     } catch (error) {
-      alert("something wrong");
+      alert("Something went wrong");
     }
-    // loadProductList();
   }
 
-  //click increase product quantity
-  function incrementQuantity(product: any) {
-    console.log(product.count, product.quantity);
+  function incrementQuantity(product) {
     if (product.count < product.quantity) {
       const updateCart = [...cartObjectArray, product];
       localStorage.setItem("cart", JSON.stringify(updateCart));
     } else {
-      alert(
-        "cart item quantity must equal or less than remain product quantity"
-      );
+      alert("Cart item quantity must be equal or less than remaining product quantity");
     }
   }
 
-  //click decrease product quantity
-  function decrementQuantity(product: any) {
-    const index = cartObjectArray.findIndex(
-      (cartItem: any) => cartItem.id === product.id
-    );
+  function decrementQuantity(product) {
+    const index = cartObjectArray.findIndex((cartItem) => cartItem.id === product.id);
     if (index !== -1) {
       const updateCart = [...cartObjectArray];
       updateCart.splice(index, 1);
       localStorage.setItem("cart", JSON.stringify(updateCart));
     }
-    localStorage.set("cart", JSON.stringify(cartObjectArray));
   }
 
-  function deleteCartItem(id: number) {
+  function deleteCartItem(id) {
     const updatedCart = cartObjectArray.filter((item) => item.id !== id);
     localStorage.setItem("cart", JSON.stringify(updatedCart));
   }
-  // useCheckLogin();
+
   return (
     <>
       <Header />
@@ -125,7 +112,7 @@ export const Cart = () => {
             <div
               hidden={checkPayment}
               id="cart-container"
-              className=" w-full mt-12 text-sm text-left text-gray-500 dark:text-gray-400"
+              className="w-full mt-12 text-sm text-left text-gray-500 dark:text-gray-400"
             >
               <div>
                 {resultArray.map((uniqueItem) => (
@@ -140,15 +127,14 @@ export const Cart = () => {
                         className="w-[200px] h-[200px] object-cover"
                       />
                     </li>
-                    <li className="product__detail w-4/12 ">
+                    <li className="product__detail w-4/12">
                       <div>
                         <strong>Name:</strong> {uniqueItem.productName}
                       </div>
-                      <div >
-                        <strong>Price:</strong>{" "}
-                        {uniqueItem.price * uniqueItem.count}
+                      <div>
+                        <strong>Price:</strong> {uniqueItem.price * uniqueItem.count}
                       </div>
-                      <div >
+                      <div>
                         <strong>Quantity:</strong>
                         <button
                           onClick={() => incrementQuantity(uniqueItem)}
@@ -165,7 +151,7 @@ export const Cart = () => {
                         </button>
                         <button
                           onClick={() => deleteCartItem(uniqueItem.id)}
-                          className="text-red-500 hover:text-red-700 ml-2"
+                          className="text-red-500 hover-text-red-700 ml-2"
                         >
                           Delete
                         </button>
@@ -181,7 +167,7 @@ export const Cart = () => {
                     </span>
                     {cartObjectArray.length !== 0 && (
                       <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mr-[15%]"
+                        className="bg-blue-500 hover-bg-blue-700 text-white font-bold py-2 px-4 rounded-full mr-[15%]"
                         onClick={doPayment}
                       >
                         Pay

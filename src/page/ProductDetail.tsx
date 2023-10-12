@@ -1,48 +1,46 @@
-import {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
-
 import { useDispatch } from "react-redux";
 import { getProductById } from "../slices/productListSlice";
 import Header from "../component/Header";
 import Footer from "../component/Footer";
 import { useCheckLogin } from "../useCheckLogin";
-export const ProductDetail = () => {
+
+export const ProductDetail= () => {
   useCheckLogin();
-  const [product, setProduct] = useState();
-  const params = useParams();
+  const [product, setProduct] = useState<any>();
+  const params = useParams<{ productId: string }>();
   const productId = params.productId;
   const dispatch = useDispatch();
   const cartLocalStorage = localStorage.getItem("cart");
   const cartObjectArray = JSON.parse(cartLocalStorage) || [];
 
-
-  //add products to cart
+  // Add products to cart
   function addProductToCart(item: any) {
     const updateCart = [...cartObjectArray, item];
     localStorage.setItem("cart", JSON.stringify(updateCart));
     console.log(updateCart);
-    
   }
+
   async function getProductDetail(productId: any) {
     try {
-      const respone = await dispatch(getProductById(productId)).unwrap();
-      setProduct(respone);
+      const response = await dispatch(getProductById(productId)).unwrap();
+      setProduct(response);
     } catch (error) {
       alert(error);
     }
   }
+
   useEffect(() => {
     getProductDetail(productId);
-  }, []);
-
+  }, [dispatch, productId]);
 
   return (
     <>
       <Header />
 
       <div className="container mx-auto my-10">
-        <h2 className="text-2xl font-semibold">Products Detail Page</h2>
+        <h2 className="text-2xl font-semibold">Product Detail Page</h2>
       </div>
 
       <main className="container bg-white mx-auto my-4 mx-10">
@@ -77,7 +75,7 @@ export const ProductDetail = () => {
         </div>
       </main>
 
-      <div className="container max-auto flex justify-end">
+      <div className="container mx-auto flex justify-end">
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
           onClick={() => addProductToCart(product)}

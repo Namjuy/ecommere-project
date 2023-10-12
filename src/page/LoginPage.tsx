@@ -17,7 +17,7 @@ export const Login = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const roleLocalStorage = Number(localStorage.getItem('role'));
-  const { isLoginSuccess, role } = useSelector((state) => state.userLogin);
+  const { isLoginSuccess } = useSelector((state) => state.userLogin);
 
   async function loginClick() {
     const username = nameRef.current?.value;

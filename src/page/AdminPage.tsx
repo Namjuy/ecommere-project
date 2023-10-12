@@ -136,7 +136,7 @@ export const ProductsTable = () => {
                 <th className="px-6 py-3">Sale</th>
                 <th className="px-6 py-3">Quantity</th>
                 <th className="px-6 py-3">Origin</th>
-                <th style={{width:'15%'}}>Product Image</th>
+                <th >Product Image</th>
                 <th className="px-6 py-3" colSpan={2}>
                   Action
                 </th>
