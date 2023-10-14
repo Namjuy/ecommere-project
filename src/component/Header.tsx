@@ -23,6 +23,17 @@ const Header = () => {
     {
       key: "1",
       label: (
+        <Link to={`/`} className="navbar__link">
+          <span className="mr-1">
+            <i className="fa-solid fa-pager"></i>
+          </span>
+          <span>Home</span>
+        </Link>
+      ),
+    },
+    {
+      key: "2",
+      label: (
         <Link to={`/cart`} className="navbar__link">
           <span className="mr-1">
             <i className="fa-solid fa-pager"></i>
@@ -32,7 +43,7 @@ const Header = () => {
       ),
     },
     {
-      key: "2",
+      key: "3",
       label: (
         <Link to={`/account`} className="navbar__link">
           <span className="mr-1">
@@ -43,7 +54,7 @@ const Header = () => {
       ),
     },
     {
-      key: "3",
+      key: "4",
       label: (
         <Link
           to="/login"
@@ -56,7 +67,7 @@ const Header = () => {
           <span>Log out</span>
         </Link>
       ),
-    },  
+    },
   ];
   if (Number(roleLocalStorage) === 1) {
     // If the user has role 1, add the "Product" item to the dropdown menu
@@ -141,7 +152,9 @@ const Header = () => {
             placement="bottomRight"
             arrow
           >
-            <Button>Menu</Button>
+            <Button className="bg-gray-900 hover:bg-black text-white focus:bg-black focus:text-white">
+              Menu
+            </Button>
           </Dropdown>
         </div>
       </div>

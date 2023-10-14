@@ -16,7 +16,7 @@ export const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
-  const roleLocalStorage = Number(localStorage.getItem('role'));
+  const roleLocalStorage = Number(localStorage.getItem("role"));
   const { isLoginSuccess } = useSelector((state) => state.userLogin);
 
   async function loginClick() {
@@ -24,7 +24,11 @@ export const Login = () => {
     const password = passRef.current?.value;
     setLoading(true);
     try {
-      await dispatch(login({ username, password })).unwrap();
+      const res = await dispatch(login({ username, password })).unwrap();
+      if (res.length == 0) {
+        message.error("login failed");
+      }
+
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -119,7 +123,7 @@ export const Register = () => {
     email: yup.string().email().required(),
     phone: yup
       .string()
-      .matches(/^\d{10}$/, "Phone number must be 10 digits")
+      .matches(/^\d{10}$/, "Phone number must be number and contain 10 digits")
       .required(),
   });
   const {
@@ -192,7 +196,7 @@ export const Register = () => {
                     {...register("username")}
                   />
                 </div>
-                <p>{errors.username?.message}</p>
+                <p style={{ color: "red" }}>{errors.username?.message}</p>
                 <div>
                   <label
                     htmlFor="password"
@@ -206,7 +210,7 @@ export const Register = () => {
                     className={inputStyle}
                   />
                 </div>
-                <p>{errors.password?.message}</p>
+                <p style={{ color: "red" }}>{errors.password?.message}</p>
                 <div>
                   <label
                     htmlFor="email"
@@ -220,7 +224,7 @@ export const Register = () => {
                     className={inputStyle}
                   />
                 </div>
-                <p>{errors.email?.message}</p>
+                <p style={{ color: "red" }}>{errors.email?.message}</p>
                 <div>
                   <label
                     htmlFor="phone"
@@ -234,7 +238,7 @@ export const Register = () => {
                     className={inputStyle}
                   />
                 </div>
-                <p>{errors.phone?.message}</p>
+                <p style={{ color: "red" }}>{errors.phone?.message}</p>
                 <button
                   type="submit"
                   className="bg-sky-400 px-4 py-2 rounded-lg"

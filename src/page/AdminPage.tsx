@@ -45,6 +45,8 @@ export const ProductsTable = () => {
     setCurrentPage(pageNumber);
   };
 
+  const [searchResultsExist, setSearchResultsExist] = useState(true);
+
   const dispatch = useDispatch();
 
   async function searchProduct() {
@@ -55,6 +57,7 @@ export const ProductsTable = () => {
       const findProduct = productsList.filter((product) =>
         product.productName.toLowerCase().includes(name.toLowerCase())
       );
+
       setProductsList(findProduct);
     } else {
       loadProductList();
@@ -126,7 +129,7 @@ export const ProductsTable = () => {
           </button>
         </div>
         <div className="overflow-x-auto">
-          <table >
+          <table className="w-full">
             <thead className="bg-sky-400 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 <th className="">Product ID</th>
@@ -136,7 +139,7 @@ export const ProductsTable = () => {
                 <th className="px-6 py-3">Sale</th>
                 <th className="px-6 py-3">Quantity</th>
                 <th className="px-6 py-3">Origin</th>
-                <th >Product Image</th>
+                <th>Product Image</th>
                 <th className="px-6 py-3" colSpan={2}>
                   Action
                 </th>
@@ -215,6 +218,7 @@ const ProductDrawer = ({
   const dispatch = useDispatch();
   const [selectedImageUrl, setSelectedImageUrl] = useState("");
   const [loading, setLoading] = useState(false);
+
   //check valid product input
   let productSchema = yup.object({
     productName: yup.string().required(),
@@ -359,15 +363,18 @@ const ProductDrawer = ({
               id="description"
               {...register("description")}
             />
-            <p>{errors.description?.message}</p>
+            {/* <p style={{ color: "red" }}>{errors.description?.message}</p> */}
+            {errors.description?.type === "required" && (
+              <p style={{ color: "red" }}>Please input description!</p>
+            )}
             <br />
             <label htmlFor="price">Price:</label>
             <input className={inputStyle} id="price" {...register("price")} />
-            <p>{errors.price?.message}</p>
+            <p style={{ color: "red" }}>{errors.price?.message}</p>
             <br />
             <label htmlFor="sale">Sale:</label>
             <input className={inputStyle} id="sale" {...register("sale")} />
-            <p>{errors.sale?.message}</p>
+            <p style={{ color: "red" }}>{errors.sale?.message}</p>
             <br />
             <label htmlFor="quantity">Quantity:</label>
             <input
@@ -375,11 +382,11 @@ const ProductDrawer = ({
               id="quantity"
               {...register("quantity")}
             />
-            <p>{errors.quantity?.message}</p>
+            <p style={{ color: "red" }}>{errors.quantity?.message}</p>
             <br />
             <label htmlFor="origin">Origin:</label>
             <input className={inputStyle} id="origin" {...register("origin")} />
-            <p>{errors.origin?.message}</p>
+            <p style={{ color: "red" }}>{errors.origin?.message}</p>
             <br />
             <div className="form__container">
               <label htmlFor="productImage">Ảnh sản phẩm</label>
@@ -395,7 +402,7 @@ const ProductDrawer = ({
                 // onChange={chooseImage}
               />
               <br />
-              <p>{errors.image?.message}</p>
+              <p style={{ color: "red" }}>{errors.image?.message}</p>
               {/* <span id="product-image">{selectedImageUrl}</span>
               {selectedImageUrl &&  <p>{errors.image?.message}</p>} */}
             </div>

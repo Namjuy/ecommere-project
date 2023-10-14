@@ -10,11 +10,11 @@ import { useCheckLogin } from "../useCheckLogin";
 
 export const Home = () => {
   useCheckLogin();
-  const ImageUrl = `../assets/image`;
+  
   const [loading, setLoading] = useState(false);
   const paginationStyle: string =
-    "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white";
-
+    "px-3 h-8 leading-tight border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white";
+ 
   const [productsList, setProductsList] = useState([]);
   const dispatch = useDispatch();
 
@@ -83,7 +83,7 @@ export const Home = () => {
       <Spin spinning={loading} tip="Loading....">
         <div className="container mx-auto my-0">
           <div id="products">
-            <div className="text-2xl text-center font-semibold">Clothes</div>
+            <div className="text-2xl text-center font-semibold my-[20px]">Clothes</div>
 
             <div className="products__list" id="products__list">
               {currentItems.map((item) => (
@@ -139,7 +139,7 @@ export const Home = () => {
                 currentPage === index + 1
                   ? "bg-blue-500 text-black"
                   : "bg-white text-gray-500"
-              } px-3 h-8 leading-tight border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
+              } ${paginationStyle}`}
             >
               {index + 1}
             </li>
